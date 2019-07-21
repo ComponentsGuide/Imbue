@@ -14,9 +14,9 @@ struct ValueControl : View {
     var min: CGFloat
     var max: CGFloat
     var places: Int
-    
+
     var value: CGFloat { boundValue.value }
-    
+
     var body: some View {
         HStack {
             Text(label).bold()
@@ -29,11 +29,11 @@ struct ValueControl : View {
 
 struct MakeSection : View {
     @State var color = ColorValue.labD50(ColorValue.Lab(l: 50, a: 0, b: 0))
-    
+
     var srgbColor: ColorValue.RGB {
         color.srgb
     }
-    
+
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 0) {
@@ -52,21 +52,21 @@ struct MakeSection : View {
         }
     }
 }
-
+//
 struct AdjustmentSection : View {
     @State var color: ColorValue = ColorValue.labD50(ColorValue.Lab(l: 50, a: 0, b: 0))
     @State var lightenAmount: CGFloat = 0.0
     @State var darkenAmount: CGFloat = 0.0
     @State var desaturateAmount: CGFloat = 0.0
     @State var invert: Bool = false
-    
+
     private enum Step : Int {
         case lighten = 0
         case darken
         case desaturate
         case invert
     }
-    
+
     private func transform(color: ColorValue, upTo: Step) -> ColorValue {
         var rgb = color.toSRGB()!
         for step in 0 ... upTo.rawValue {
@@ -87,23 +87,23 @@ struct AdjustmentSection : View {
         }
         return ColorValue.sRGB(rgb)
     }
-    
+
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 0) {
                 transform(color: color, upTo: .invert).swiftUIColor?.layoutPriority(1).edgesIgnoringSafeArea(.top)
             }
             Section {
-                ValueControl(label: "Lighten", boundValue: $lightenAmount, min: 0, max: 1, places: 0)
-                ValueControl(label: "Darken", boundValue: $darkenAmount, min: 0, max: 1, places: 0)
-                ValueControl(label: "Desaturate", boundValue: $desaturateAmount, min: 0, max: 1, places: 0)
+                ValueControl(label: "Lighten", boundValue: $lightenAmount, min: 0, max: 1, places: 3)
+                ValueControl(label: "Darken", boundValue: $darkenAmount, min: 0, max: 1, places: 3)
+                ValueControl(label: "Desaturate", boundValue: $desaturateAmount, min: 0, max: 1, places: 3)
                 Toggle(isOn: $invert) {
                     Text("Invert").bold()
                 }
             }
                 .layoutPriority(0)
                 .padding(EdgeInsets(top: 4, leading: 16, bottom: 8, trailing: 16))
-            //            Spacer()
+//                        Spacer()
         }
     }
 }
@@ -119,18 +119,18 @@ struct ContentView : View {
     var body: some View {
         TabbedView(selection: $section.caseIndex) {
             MakeSection()
-                .tabItemLabel(VStack {
+                .tabItem {
                     Image(systemName: "slider.horizontal.3")
-                    Text("Make").font(.title)
-                })
-                .tag(0)
+                    Text("Make")
+            }
+            .tag(0)
             AdjustmentSection()
-                .tabItemLabel(VStack {
+                .tabItem {
                     Image(systemName: "dial.fill")
                     Text("Adjust").font(.title)
-                })
-                .tag(1)
-        }
+            }
+            .tag(1)
+        }.edgesIgnoringSafeArea(.top)
     }
 }
 

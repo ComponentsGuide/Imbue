@@ -85,6 +85,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B2A266D722CF1FB40029EEB8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		B2E88F7A22BCB551003AA2BC = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +120,7 @@
 				B2E88F8822BCB551003AA2BC /* SceneDelegate.swift */,
 				B2E88F9122BCB553003AA2BC /* LaunchScreen.storyboard */,
 				B2E88FBF22BCBD02003AA2BC /* View */,
+				B2A266D722CF1FB40029EEB8 /* ViewModel */,
 				B2E88FBE22BCBCF2003AA2BC /* Model */,
 				B2E88F8C22BCB553003AA2BC /* Assets.xcassets */,
 				B2E88F9422BCB553003AA2BC /* Info.plist */,
@@ -470,7 +478,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ImbueSwiftUI/ImbueSwiftUI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "ImbueSwiftUI/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5278SPSAPR;
 				ENABLE_PREVIEWS = YES;
@@ -481,7 +488,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.royalicing.ImbueSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_UIKITFORMAC = YES;
+				SUPPORTS_UIKITFORMAC = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -493,7 +500,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ImbueSwiftUI/ImbueSwiftUI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "ImbueSwiftUI/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5278SPSAPR;
 				ENABLE_PREVIEWS = YES;
@@ -504,7 +510,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.royalicing.ImbueSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_UIKITFORMAC = YES;
+				SUPPORTS_UIKITFORMAC = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -515,7 +521,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5278SPSAPR;
 				INFOPLIST_FILE = ImbueSwiftUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -524,6 +533,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.royalicing.ImbueSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImbueSwiftUI.app/ImbueSwiftUI";
@@ -535,7 +546,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5278SPSAPR;
 				INFOPLIST_FILE = ImbueSwiftUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -544,6 +558,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.royalicing.ImbueSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImbueSwiftUI.app/ImbueSwiftUI";
@@ -554,7 +570,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5278SPSAPR;
 				INFOPLIST_FILE = ImbueSwiftUIUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -563,6 +582,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.royalicing.ImbueSwiftUIUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = ImbueSwiftUI;
@@ -573,7 +594,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5278SPSAPR;
 				INFOPLIST_FILE = ImbueSwiftUIUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -582,6 +606,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.royalicing.ImbueSwiftUIUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = ImbueSwiftUI;
