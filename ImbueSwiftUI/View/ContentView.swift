@@ -28,25 +28,29 @@ struct ValueControl : View {
 }
 
 struct MakeSection : View {
-    @State var color = ColorValue.labD50(ColorValue.Lab(l: 50, a: 0, b: 0))
-
-    var srgbColor: ColorValue.RGB {
-        color.srgb
+    @ObjectBinding var instance = AdjustableColorInstance(state: .init())
+    
+    var colorPreview: some View {
+        let color = instance.state.inputColor
+        
+        return HStack(alignment: .center, spacing: 0) {
+            color.swiftUIColor
+            ColorValue.sRGB(color.srgb).swiftUIColor
+        }
     }
 
     var body: some View {
-        VStack {
-            HStack(alignment: .center, spacing: 0) {
-                color.swiftUIColor
-                ColorValue.sRGB(srgbColor).swiftUIColor
-            }
+        let colorBinding = $instance.state.inputColor
+        
+        return VStack {
+            self.colorPreview
             Section {
-                ValueControl(label: "L", boundValue: $color[keyPath: \.lab.l], min: 0, max: 100, places: 0)
-                ValueControl(label: "a", boundValue: $color[keyPath: \.lab.a], min: -128, max: 127, places: 0)
-                ValueControl(label: "b", boundValue: $color[keyPath: \.lab.b], min: -128, max: 127, places: 0)
-                ValueControl(label: "R", boundValue: $color[keyPath: \.srgb.r], min: 0, max: 1, places: 3)
-                ValueControl(label: "G", boundValue: $color[keyPath: \.srgb.g], min: 0, max: 1, places: 3)
-                ValueControl(label: "B", boundValue: $color[keyPath: \.srgb.b], min: 0, max: 1, places: 3)
+                ValueControl(label: "L", boundValue: colorBinding[keyPath: \.lab.l], min: 0, max: 100, places: 0)
+                ValueControl(label: "a", boundValue: colorBinding[keyPath: \.lab.a], min: -128, max: 127, places: 0)
+                ValueControl(label: "b", boundValue: colorBinding[keyPath: \.lab.b], min: -128, max: 127, places: 0)
+                ValueControl(label: "R", boundValue: colorBinding[keyPath: \.srgb.r], min: 0, max: 1, places: 3)
+                ValueControl(label: "G", boundValue: colorBinding[keyPath: \.srgb.g], min: 0, max: 1, places: 3)
+                ValueControl(label: "B", boundValue: colorBinding[keyPath: \.srgb.b], min: 0, max: 1, places: 3)
             }.padding(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
 //            Spacer()
         }
@@ -54,50 +58,18 @@ struct MakeSection : View {
 }
 //
 struct AdjustmentSection : View {
-    @State var color: ColorValue = ColorValue.labD50(ColorValue.Lab(l: 50, a: 0, b: 0))
-    @State var lightenAmount: CGFloat = 0.0
-    @State var darkenAmount: CGFloat = 0.0
-    @State var desaturateAmount: CGFloat = 0.0
-    @State var invert: Bool = false
-
-    private enum Step : Int {
-        case lighten = 0
-        case darken
-        case desaturate
-        case invert
-    }
-
-    private func transform(color: ColorValue, upTo: Step) -> ColorValue {
-        var rgb = color.toSRGB()!
-        for step in 0 ... upTo.rawValue {
-            switch step {
-            case Step.lighten.rawValue:
-                rgb = rgb.lightened(amount: self.lightenAmount)
-            case Step.darken.rawValue:
-                rgb = rgb.darkened(amount: self.darkenAmount)
-            case Step.desaturate.rawValue:
-                rgb = rgb.desaturated(amount: self.desaturateAmount)
-            case Step.invert.rawValue:
-                if self.invert {
-                    rgb = rgb.inverted()
-                }
-            default:
-                break
-            }
-        }
-        return ColorValue.sRGB(rgb)
-    }
+    @ObjectBinding var instance = AdjustableColorInstance(state: .init())
 
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 0) {
-                transform(color: color, upTo: .invert).swiftUIColor?.layoutPriority(1).edgesIgnoringSafeArea(.top)
+                instance.outputColor.swiftUIColor?.layoutPriority(1).edgesIgnoringSafeArea(.top)
             }
             Section {
-                ValueControl(label: "Lighten", boundValue: $lightenAmount, min: 0, max: 1, places: 3)
-                ValueControl(label: "Darken", boundValue: $darkenAmount, min: 0, max: 1, places: 3)
-                ValueControl(label: "Desaturate", boundValue: $desaturateAmount, min: 0, max: 1, places: 3)
-                Toggle(isOn: $invert) {
+                ValueControl(label: "Lighten", boundValue: $instance.state.lightenAmount, min: 0, max: 1, places: 3)
+                ValueControl(label: "Darken", boundValue: $instance.state.darkenAmount, min: 0, max: 1, places: 3)
+                ValueControl(label: "Desaturate", boundValue: $instance.state.desaturateAmount, min: 0, max: 1, places: 3)
+                Toggle(isOn: $instance.state.invert) {
                     Text("Invert").bold()
                 }
             }
@@ -109,6 +81,8 @@ struct AdjustmentSection : View {
 }
 
 struct ContentView : View {
+    @ObjectBinding var instance = AdjustableColorInstance(state: .init())
+    
     enum Section : String, CaseIterable {
         case make
         case adjust
@@ -118,13 +92,13 @@ struct ContentView : View {
     
     var body: some View {
         TabbedView(selection: $section.caseIndex) {
-            MakeSection()
+            MakeSection(instance: instance)
                 .tabItem {
                     Image(systemName: "slider.horizontal.3")
                     Text("Make")
             }
             .tag(0)
-            AdjustmentSection()
+            AdjustmentSection(instance: instance)
                 .tabItem {
                     Image(systemName: "dial.fill")
                     Text("Adjust").font(.title)
