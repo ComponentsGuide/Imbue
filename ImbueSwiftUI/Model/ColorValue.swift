@@ -31,16 +31,16 @@ public enum ColorValue : Equatable {
 	case labD50(Lab)
 	case sRGB(RGB)
 	
-	public static func ==(lhs: ColorValue, rhs: ColorValue) -> Bool {
-		switch (lhs, rhs) {
-		case let (.labD50(l), .labD50(r)):
-			return l == r
-		case let (.sRGB(l), .sRGB(r)):
-			return l == r
-		default:
-			return false
-		}
-	}
+//	public static func ==(lhs: ColorValue, rhs: ColorValue) -> Bool {
+//		switch (lhs, rhs) {
+//		case let (.labD50(l), .labD50(r)):
+//			return l == r
+//		case let (.sRGB(l), .sRGB(r)):
+//			return l == r
+//		default:
+//			return false
+//		}
+//	}
 	
 	fileprivate enum Kind : String {
 		case labD50
@@ -102,10 +102,8 @@ public enum ColorValue : Equatable {
 // - MARK: SwiftUI
 
 extension ColorValue {
-    var swiftUIColor: SwiftUI.Color? {
-        guard let srgb = toSRGB() else {
-            return nil
-        }
+    var swiftUIColor: SwiftUI.Color {
+        let srgb = self.srgb
         return SwiftUI.Color(.sRGB, red: Double(srgb.r), green: Double(srgb.g), blue: Double(srgb.b), opacity: 1.0)
     }
 }
@@ -202,7 +200,15 @@ extension ColorValue.RGB {
 	}
 	
 	public var hexString: String {
-		return "#" + [r.hexString(minLength: 2), g.hexString(minLength: 2), b.hexString(minLength: 2)].joined()
+        get {
+            "#" + [r.hexString(minLength: 2), g.hexString(minLength: 2), b.hexString(minLength: 2)].joined()
+        }
+        set(input) {
+            guard let newValue = ColorValue.RGB(hexString: input)
+                else { return }
+            
+            self = newValue
+        }
 	}
 }
 

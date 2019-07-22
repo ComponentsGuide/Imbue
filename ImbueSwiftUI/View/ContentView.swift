@@ -27,16 +27,70 @@ struct ValueControl : View {
     }
 }
 
+struct SavedColor: Identifiable {
+    var id: UUID
+    var colorValue: ColorValue
+}
+
 struct MakeSection : View {
     @ObjectBinding var instance = AdjustableColorInstance(state: .init())
+    
+    @State var savedColors: [SavedColor] = []
+    
+    @State var editHex = false
+    
+    func addCurrentColor() {
+        savedColors.append(.init(id: UUID(), colorValue: instance.state.inputColor))
+    }
     
     var colorPreview: some View {
         let color = instance.state.inputColor
         
-        return HStack(alignment: .center, spacing: 0) {
-            color.swiftUIColor
-            ColorValue.sRGB(color.srgb).swiftUIColor
+        return VStack(alignment: .center, spacing: 0) {
+            ForEach(savedColors) { savedColor in
+                Button(action: {
+                    self.instance.state.inputColor = savedColor.colorValue
+                }) {
+                    savedColor.colorValue.swiftUIColor
+                }
+            }
+            /*.onMove { (indexes, toIndex) in
+                self.savedColors.move(fromOffsets: indexes, toOffset: toIndex)
+            }*/
+            Divider().background(Color.black)
+            HStack(alignment: .center, spacing: 0) {
+                color.swiftUIColor // Wide
+                ColorValue.sRGB(color.srgb).swiftUIColor // sRGB
+            }
         }.edgesIgnoringSafeArea(.top)
+    }
+    
+    var actions: some View {
+        HStack {
+            Button(action: {
+                self.instance.state.inputColor.copy(to: .general)
+            }, label: { Image(systemName: "doc.on.doc") })
+                .accessibility(label: Text("Copy"))
+            
+            Button(action: {
+                guard let newColor = ColorValue(pasteboard: .general)
+                    else { return }
+                
+                self.instance.state.inputColor = newColor
+            }, label: {
+                    Image(systemName: "doc.on.clipboard")
+            })
+                .accessibility(label: Text("Paste"))
+            
+            TextField("Hex", text: $instance.state[\.inputColor.srgb.hexString])
+            
+            Button(action: {
+                withAnimation {
+                    self.addCurrentColor()
+                }
+            }, label: { Image(systemName: "plus.circle") })
+                .accessibility(label: Text("Add"))
+        }.padding(EdgeInsets(top: 4.0, leading: 12.0, bottom: 4.0, trailing: 12.0))
     }
     
     var body: some View {
@@ -44,6 +98,7 @@ struct MakeSection : View {
         
         return VStack {
             self.colorPreview
+            self.actions
             Section {
                 ValueControl(label: "L", boundValue: colorBinding[keyPath: \.lab.l], min: 0, max: 100, places: 0)
                 ValueControl(label: "a", boundValue: colorBinding[keyPath: \.lab.a], min: -128, max: 127, places: 0)
@@ -63,7 +118,7 @@ struct AdjustmentSection : View {
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 0) {
-                instance.outputColor.swiftUIColor?.layoutPriority(1).edgesIgnoringSafeArea(.top)
+                instance.outputColor.swiftUIColor.layoutPriority(1).edgesIgnoringSafeArea(.top)
             }
             Section {
                 ValueControl(label: "Lighten", boundValue: $instance.state.lightenAmount, min: 0, max: 1, places: 3)
@@ -105,6 +160,7 @@ struct ContentView : View {
             }
             .tag(1)
         }.edgesIgnoringSafeArea(.top)
+        .accentColor(.init(.sRGB, white: 0.2, opacity: 1.0))
     }
 }
 
