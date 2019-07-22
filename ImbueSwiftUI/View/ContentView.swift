@@ -14,9 +14,9 @@ struct ValueControl : View {
     var min: CGFloat
     var max: CGFloat
     var places: Int
-
+    
     var value: CGFloat { boundValue.value }
-
+    
     var body: some View {
         HStack {
             Text(label).bold()
@@ -36,9 +36,9 @@ struct MakeSection : View {
         return HStack(alignment: .center, spacing: 0) {
             color.swiftUIColor
             ColorValue.sRGB(color.srgb).swiftUIColor
-        }
+        }.edgesIgnoringSafeArea(.top)
     }
-
+    
     var body: some View {
         let colorBinding = $instance.state.inputColor
         
@@ -52,14 +52,14 @@ struct MakeSection : View {
                 ValueControl(label: "G", boundValue: colorBinding[keyPath: \.srgb.g], min: 0, max: 1, places: 3)
                 ValueControl(label: "B", boundValue: colorBinding[keyPath: \.srgb.b], min: 0, max: 1, places: 3)
             }.padding(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-//            Spacer()
+            //            Spacer()
         }
     }
 }
 //
 struct AdjustmentSection : View {
     @ObjectBinding var instance = AdjustableColorInstance(state: .init())
-
+    
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 0) {
@@ -73,9 +73,9 @@ struct AdjustmentSection : View {
                     Text("Invert").bold()
                 }
             }
-                .layoutPriority(0)
+            .layoutPriority(0)
                 .padding(EdgeInsets(top: 4, leading: 16, bottom: 8, trailing: 16))
-//                        Spacer()
+            //                        Spacer()
         }
     }
 }
