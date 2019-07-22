@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2544FF422E42F67009A2BBF /* AdjustableColorInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2544FF322E42F67009A2BBF /* AdjustableColorInstance.swift */; };
 		B2E88F8722BCB551003AA2BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E88F8622BCB551003AA2BC /* AppDelegate.swift */; };
 		B2E88F8922BCB551003AA2BC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E88F8822BCB551003AA2BC /* SceneDelegate.swift */; };
 		B2E88F8B22BCB551003AA2BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E88F8A22BCB551003AA2BC /* ContentView.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B2544FF322E42F67009A2BBF /* AdjustableColorInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdjustableColorInstance.swift; path = "../../../../../../System/Volumes/Data/Users/pgwsmith/Royal Icing/ImbueSwiftUI/ImbueSwiftUI/ViewModel/AdjustableColorInstance.swift"; sourceTree = "<group>"; };
 		B25BFC5722BD169000D999B8 /* ImbueSwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ImbueSwiftUI.entitlements; sourceTree = "<group>"; };
 		B2E88F8322BCB551003AA2BC /* ImbueSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImbueSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E88F8622BCB551003AA2BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 		B2A266D722CF1FB40029EEB8 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				B2544FF322E42F67009A2BBF /* AdjustableColorInstance.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				B2E88FBD22BCBCEC003AA2BC /* ColorAdjustments.swift in Sources */,
 				B2E88F8722BCB551003AA2BC /* AppDelegate.swift in Sources */,
 				B2E88F8922BCB551003AA2BC /* SceneDelegate.swift in Sources */,
+				B2544FF422E42F67009A2BBF /* AdjustableColorInstance.swift in Sources */,
 				B2E88FBB22BCBCEC003AA2BC /* ColorValue.swift in Sources */,
 				B2E88F8B22BCB551003AA2BC /* ContentView.swift in Sources */,
 				B2E88FBA22BCBCEC003AA2BC /* CoreGraphics.swift in Sources */,
