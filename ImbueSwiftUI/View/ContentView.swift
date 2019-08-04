@@ -14,14 +14,21 @@ struct ValueControl : View {
     var min: CGFloat
     var max: CGFloat
     var places: Int
+    var minColor: UIColor?
+    var maxColor: UIColor?
     
     var value: CGFloat { boundValue.value }
+    
+    var slider: some View {
+        CustomSlider(value: boundValue, from: min, through: max)
+            .trackColors(min: minColor, max: maxColor)
+    }
     
     var body: some View {
         HStack {
             Text(label).bold()
-            CustomSlider(value: boundValue, from: min, through: max)
-            Slider(value: boundValue, in: min...max)
+            self.slider
+//            Slider(value: boundValue, in: min...max)
             Text(String(format: "%.\(places)f", value))
                 .frame(width: CGFloat(60), height: nil, alignment: .trailing)
         }
@@ -97,16 +104,19 @@ struct MakeSection : View {
     var body: some View {
         let colorBinding = $instance.state.inputColor
         
+        let lab = instance.state.inputColor.lab
+        let rgb = instance.state.inputColor.srgb
+        
         return VStack {
             self.colorPreview
             self.actions
             Section {
-                ValueControl(label: "L", boundValue: colorBinding[keyPath: \.lab.l], min: 0, max: 100, places: 0)
-                ValueControl(label: "a", boundValue: colorBinding[keyPath: \.lab.a], min: -128, max: 127, places: 0)
-                ValueControl(label: "b", boundValue: colorBinding[keyPath: \.lab.b], min: -128, max: 127, places: 0)
-                ValueControl(label: "R", boundValue: colorBinding[keyPath: \.srgb.r], min: 0, max: 1, places: 3)
-                ValueControl(label: "G", boundValue: colorBinding[keyPath: \.srgb.g], min: 0, max: 1, places: 3)
-                ValueControl(label: "B", boundValue: colorBinding[keyPath: \.srgb.b], min: 0, max: 1, places: 3)
+                ValueControl(label: "L", boundValue: colorBinding[keyPath: \.lab.l], min: 0, max: 100, places: 0, minColor: ColorValue.labD50(.init(l: 0, a: 0, b: 0)).uiColor, maxColor: ColorValue.labD50(.init(l: 80, a: 0, b: 0)).uiColor)
+                ValueControl(label: "a", boundValue: colorBinding[keyPath: \.lab.a], min: -128, max: 127, places: 0, minColor: ColorValue.labD50(.init(l: lab.l, a: -127, b: lab.b)).uiColor, maxColor: ColorValue.labD50(.init(l: lab.l, a: 128, b: lab.b)).uiColor)
+                ValueControl(label: "b", boundValue: colorBinding[keyPath: \.lab.b], min: -128, max: 127, places: 0, minColor: ColorValue.labD50(.init(l: lab.l, a: lab.a, b: -127)).uiColor, maxColor: ColorValue.labD50(.init(l: lab.l, a: lab.a, b: 128)).uiColor)
+                ValueControl(label: "R", boundValue: colorBinding[keyPath: \.srgb.r], min: 0, max: 1, places: 3, minColor: ColorValue.sRGB(.init(r: 0, g: rgb.g, b: rgb.b)).uiColor, maxColor: ColorValue.sRGB(.init(r: 1, g: rgb.g, b: rgb.b)).uiColor)
+                ValueControl(label: "G", boundValue: colorBinding[keyPath: \.srgb.g], min: 0, max: 1, places: 3, minColor: ColorValue.sRGB(.init(r: rgb.r, g: 0, b: rgb.b)).uiColor, maxColor: ColorValue.sRGB(.init(r: rgb.r, g: 1, b: rgb.b)).uiColor)
+                ValueControl(label: "B", boundValue: colorBinding[keyPath: \.srgb.b], min: 0, max: 1, places: 3, minColor: ColorValue.sRGB(.init(r: rgb.r, g: rgb.g, b: 0)).uiColor, maxColor: ColorValue.sRGB(.init(r: rgb.r, g: rgb.g, b: 1)).uiColor)
             }.padding(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
             //            Spacer()
         }

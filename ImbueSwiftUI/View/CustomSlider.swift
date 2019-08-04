@@ -26,6 +26,8 @@ struct CustomSlider<FloatType: BinaryFloatingPoint> : UIViewRepresentable {
     
     @Binding var value: FloatType
     var from, through: FloatType
+    var minimumTrackTintColor: UIColor?
+    var maximumTrackTintColor: UIColor?
     
     func makeCoordinator() -> CustomSliderCoordinator {
         Coordinator(setFloatValue: self.setFloatValue)
@@ -38,6 +40,10 @@ struct CustomSlider<FloatType: BinaryFloatingPoint> : UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<CustomSlider>) -> UISlider {
         let slider = UISlider()
         
+        slider.value = Float(value)
+        slider.minimumValue = Float(from)
+        slider.maximumValue = Float(through)
+        
         slider.addTarget(context.coordinator, action: #selector(Coordinator.changed), for: .valueChanged)
         
         return slider
@@ -47,5 +53,22 @@ struct CustomSlider<FloatType: BinaryFloatingPoint> : UIViewRepresentable {
         slider.value = Float(value)
         slider.minimumValue = Float(from)
         slider.maximumValue = Float(through)
+        
+        if let minimumTrackTintColor = self.minimumTrackTintColor {
+            slider.minimumTrackTintColor = minimumTrackTintColor
+        }
+        
+        if let maximumTrackTintColor = self.maximumTrackTintColor {
+            slider.maximumTrackTintColor = maximumTrackTintColor
+        }
+    }
+}
+
+extension CustomSlider {
+    func trackColors(min: UIColor?, max: UIColor?) -> CustomSlider {
+        var copy = self
+        if let min = min { copy.minimumTrackTintColor = min }
+        if let max = max { copy.maximumTrackTintColor = max }
+        return copy
     }
 }

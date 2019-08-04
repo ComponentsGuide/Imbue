@@ -9,6 +9,7 @@
 import Foundation
 import CoreGraphics
 import SwiftUI
+import UIKit
 
 
 public enum ColorValue : Equatable {
@@ -105,6 +106,16 @@ extension ColorValue {
     var swiftUIColor: SwiftUI.Color {
         let srgb = self.srgb
         return SwiftUI.Color(.sRGB, red: Double(srgb.r), green: Double(srgb.g), blue: Double(srgb.b), opacity: 1.0)
+    }
+}
+
+// - MARK: UIKit
+
+extension ColorValue {
+    var uiColor: UIColor {
+        let srgb = self.srgb
+        let cgColor = CGColor.sRGB(r: srgb.r, g: srgb.g, b: srgb.b)!
+        return UIColor(cgColor: cgColor)
     }
 }
 
