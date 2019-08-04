@@ -20,9 +20,10 @@ struct ValueControl : View {
     var body: some View {
         HStack {
             Text(label).bold()
-            Slider(value: boundValue, from: min, through: max)
+            CustomSlider(value: boundValue, from: min, through: max)
+            Slider(value: boundValue, in: min...max)
             Text(String(format: "%.\(places)f", value))
-                .frame(width: 60, height: nil, alignment: .trailing)
+                .frame(width: CGFloat(60), height: nil, alignment: .trailing)
         }
     }
 }
@@ -146,7 +147,7 @@ struct ContentView : View {
     @State var section: Section = .make
     
     var body: some View {
-        TabbedView(selection: $section.caseIndex) {
+        TabView(selection: $section.caseIndex) {
             MakeSection(instance: instance)
                 .tabItem {
                     Image(systemName: "slider.horizontal.3")
