@@ -11,9 +11,7 @@ import Combine
 import SwiftUI
 
 
-class AdjustableColorInstance : BindableObject {
-    let willChange = PassthroughSubject<(), Never>()
-    
+class AdjustableColorInstance : ObservableObject {    
     struct State {
         var inputColor: ColorValue = ColorValue.labD50(ColorValue.Lab(l: 50, a: 0, b: 0))
         var lightenAmount: CGFloat = 0.0
@@ -22,11 +20,7 @@ class AdjustableColorInstance : BindableObject {
         var invert: Bool = false
     }
     
-    var state: State {
-        willSet {
-            willChange.send()
-        }
-    }
+    @Published var state: State
     
     init(state: State) {
         self.state = state;

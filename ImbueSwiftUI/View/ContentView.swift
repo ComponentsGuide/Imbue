@@ -34,7 +34,7 @@ struct SavedColor: Identifiable {
 }
 
 struct MakeSection : View {
-    @ObjectBinding var instance = AdjustableColorInstance(state: .init())
+    @ObservedObject var instance = AdjustableColorInstance(state: .init())
     
     @State var savedColors: [SavedColor] = []
     
@@ -114,7 +114,7 @@ struct MakeSection : View {
 }
 //
 struct AdjustmentSection : View {
-    @ObjectBinding var instance = AdjustableColorInstance(state: .init())
+    @ObservedObject var instance = AdjustableColorInstance(state: .init())
     
     var body: some View {
         VStack {
@@ -137,7 +137,7 @@ struct AdjustmentSection : View {
 }
 
 struct ContentView : View {
-    @ObjectBinding var instance = AdjustableColorInstance(state: .init())
+    @ObservedObject var instance = AdjustableColorInstance(state: .init())
     
     enum Section : String, CaseIterable {
         case make
